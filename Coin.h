@@ -7,11 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "MainViewController.h"
 
 @interface Coin : NSObject
 
-@end
+-(id) init;
+-(id) initWithX:(int)posX andY:(int)posY andValue:(int)val;
 
-int locationX;
-int locationY;
-int value;
+@property int locationX;
+@property int locationY;
+@property int value;
+@property UIImageView *coinImage;
+
+@end

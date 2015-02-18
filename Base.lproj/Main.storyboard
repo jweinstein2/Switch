@@ -16,6 +16,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cWK-iT-uCE" userLabel="FullScreenButton">
+                                <rect key="frame" x="0.0" y="0.0" width="321" height="568"/>
+                                <state key="normal" title=" ">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="backgroundButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XTQ-d4-Soz"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hI-xi-rkH" userLabel="Background White Solid">
+                                <rect key="frame" x="-23" y="-48" width="375" height="667"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <color key="shadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.44999999999999962" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text=" " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dw-xp-3Fv" userLabel="Background Label">
                                 <rect key="frame" x="-33" y="-58" width="375" height="667"/>
                                 <color key="backgroundColor" red="0.16603825550000001" green="0.75850441160000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -51,19 +68,19 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TrX-dV-IwR">
                                 <rect key="frame" x="-4" y="39" width="106" height="204"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="184"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DRA-xR-qIB">
                                 <rect key="frame" x="107" y="39" width="106" height="204"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="184"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Caa-Bf-jef">
                                 <rect key="frame" x="215" y="39" width="106" height="204"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="184"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mb4-N8-ltU">
@@ -75,8 +92,12 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="centerScoreLabel" destination="DRA-xR-qIB" id="FVI-hr-Klt"/>
+                        <outlet property="gamecenter" destination="TGH-dT-BdA" id="bZb-ep-eXq"/>
+                        <outlet property="information" destination="7f5-AR-mxj" id="qcJ-Em-Wa4"/>
                         <outlet property="leftScoreLabel" destination="TrX-dV-IwR" id="flY-a0-zG8"/>
                         <outlet property="rightScoreLabel" destination="Caa-Bf-jef" id="ij8-tL-DHZ"/>
+                        <outlet property="settings" destination="mG0-tP-oB4" id="qg7-HA-MCS"/>
+                        <outlet property="store" destination="KAp-hn-8GL" id="Amp-ZH-2sy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
