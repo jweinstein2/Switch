@@ -13,7 +13,6 @@
 -(id) init;
 -(id) initWithSpeed: (int)spd;
 -(void) move;
-
-@property UIImageView *negativeImage;
+-(void) bounce;
 
 @end

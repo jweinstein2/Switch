@@ -16,9 +16,7 @@
 
 -(void) collide:(Token*) tok withLocation:(bool) loc;
 
-@property (weak, nonatomic) IBOutlet UILabel *leftScoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *centerScoreLabel;
-@property (weak, nonatomic) IBOutlet UILabel *rightScoreLabel;
 @property (weak, nonatomic) IBOutlet UIButton *gamecenter;
 @property (weak, nonatomic) IBOutlet UIButton *store;
 @property (weak, nonatomic) IBOutlet UIButton *settings;

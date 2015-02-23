@@ -15,16 +15,17 @@
 @implementation MainViewController
 
 bool playing;
+int score;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view
     playing = false;
     self.tokens = [[NSMutableArray alloc] init];
     self.coins = [[NSMutableArray alloc] init];
     self.switcher = [[Switcher alloc] init];
     [self.view addSubview: self.switcher.switcherImage];
     [self.view bringSubviewToFront: self.switcher.switcherImage];
+    // Do any additional setup after loading the view
 }
 
 - (void)didReceiveMemoryWarning {
@@ -38,7 +39,9 @@ bool playing;
         [self addCoin:1 withLocX: 50 andLocY: 100];
         [self addCoin:1 withLocX: 100 andLocY: 400];
         [self addPositiveTokenWithSpeed:1];
-        [self addNegativeTokenWithSpeed:-1];
+        score = 0;
+        self.centerScoreLabel.text = [NSString stringWithFormat:@"0"];
+        //[self addNegativeTokenWithSpeed:-1];
         [self changeScreen];
         [self performSelector:@selector(gameLoop) withObject:self afterDelay:0.5];
         playing = true;
@@ -55,18 +58,25 @@ bool playing;
     [self.view sendSubviewToBack:self.store];
     [self.view sendSubviewToBack:self.settings];
     [self.view sendSubviewToBack:self.information];
-    [self.leftScoreLabel setAlpha: .35];
-    [self.centerScoreLabel setAlpha: .35];
-    [self.rightScoreLabel setAlpha: .35];
+    [self.centerScoreLabel setAlpha: .45];
     
 }
 
 -(void)gameLoop{
-    /*
     for(Token *tok in self.tokens) {
         //Check if tokens have completed animation
+        if(tok.collided == true){
+            bool loc = false;
+            if(tok.speed > 0)
+                loc = true;
+            [self collide:tok withLocation:loc];
+        }else if(tok.needsToBeRemoved == true){
+            //NSLog(@"Removed:");
+            [self.tokens removeObject:tok];
+            [self addNegativeTokenWithSpeed:1];
+        }
     }
-    */
+    self.centerScoreLabel.text = [NSString stringWithFormat: @"%d", score];
     [self performSelector:@selector(gameLoop) withObject:self afterDelay:0.01];
 }
 
@@ -81,46 +91,68 @@ bool playing;
 -(void)addPositiveTokenWithSpeed:(int)spd{
     NSLog(@"Adding a Positive Token");
     Positive *token = [[Positive alloc] initWithSpeed:spd];
-    [self.view addSubview: token.positiveImage];
+    [self.view addSubview: token.tokenImage];
     [self.tokens addObject: token];
-    [self.view bringSubviewToFront: token.positiveImage];
+    [self.view bringSubviewToFront: token.tokenImage];
     [token move];
 }
 
 -(void)addNegativeTokenWithSpeed:(int)spd{
     NSLog(@"Adding a Negative Token");
     Negative *token = [[Negative alloc] initWithSpeed:spd];
-    [self.view addSubview: token.negativeImage];
+    [self.view addSubview: token.tokenImage];
     [self.tokens addObject: token];
-    [self.view bringSubviewToFront: token.negativeImage];
+    [self.view bringSubviewToFront: token.tokenImage];
     [token move];
 }
 
 -(void) collide: (Token*) tok withLocation:(bool) loc{
-    NSLog(@"CALLED");
-    if(tok.value > 1){
+    if(tok.value > 0){
         //if the token is positive
         if(loc == self.switcher.orientation){
             //If they match
+            score += 1;
+            [self.tokens removeObject:tok];
+            [tok.tokenImage removeFromSuperview];
             NSLog(@"correct: need to add one to score");
+            [self addPositiveTokenWithSpeed:-1];
         }else{
-            //if they don't match
-            NSLog(@"incorrect: bounces straight back");
+            NSLog(@"incorrect: end game");
+            [self.tokens removeObject:tok];
+            [tok.tokenImage removeFromSuperview];
+            [self endGame];
+            playing = false;
         }
     }else{
         //if the token is negative
-        if(loc == self.switcher.orientation){
+        if(loc != self.switcher.orientation){
             //If they match
+            [tok bounce];
             NSLog(@"corret: bounces diagonally");
         }else{
-            //if they don't match
             NSLog(@"incorrect: end game");
+            [self.tokens removeObject:tok];
+            [tok.tokenImage removeFromSuperview];
+            [self endGame];
+            playing = false;
         }
     }
+    tok.collided = false;
 }
 
--(void) collideHelper: (Token*) tok withLocation:(bool) loc{
-    
+-(void)endGame{
+    //NEED TO COMPLETELY CLEAR THE SCREEN
+    [self.view bringSubviewToFront:self.gamecenter];
+    [self.view bringSubviewToFront:self.store];
+    [self.view bringSubviewToFront:self.settings];
+    [self.view bringSubviewToFront:self.information];
+    [self.centerScoreLabel setAlpha: 1];
+    self.tokens = [[NSMutableArray alloc] init];
+    self.coins = [[NSMutableArray alloc] init];
+    [self.switcher.switcherImage removeFromSuperview];
+    self.switcher = [[Switcher alloc] init];
+    [self.view addSubview: self.switcher.switcherImage];
+    [self.view bringSubviewToFront: self.switcher.switcherImage];
 }
 
 

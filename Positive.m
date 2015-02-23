@@ -28,38 +28,63 @@
     else if(spd < 0)
         super.locationY = screenSize.height + 20;
     super.speed = spd;
-    self.positiveImage =[[UIImageView alloc] initWithFrame:CGRectMake(super.locationX,super.locationY,40,40)];
-    self.positiveImage.center = CGPointMake(self.locationX, self.locationY);
-    self.positiveImage.image=[UIImage imageNamed:@"plus.png"];
+    self.tokenImage =[[UIImageView alloc] initWithFrame:CGRectMake(super.locationX,super.locationY,40,40)];
+    self.tokenImage.center = CGPointMake(self.locationX, self.locationY);
+    self.tokenImage.image=[UIImage imageNamed:@"plus.png"];
     return(self);
 }
 
 -(void) move{
     [super move];
     [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:5.00];
+    [UIView setAnimationDuration:2]; //NEED TO ADD VARIABLE SPEED
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(transitionDidStop:finished:context:)];
     [UIView setAnimationCurve: UIViewAnimationCurveLinear];
-    int yFinishLocation = self.positiveImage.superview.center.y;
+    int yFinishLocation = self.tokenImage.superview.center.y;
     if(super.speed > 0){
         yFinishLocation -= 45;
     }else if(super.speed < 0){
         yFinishLocation += 45;
     }
 #warning needs to be standardized to size of switcher
-    self.positiveImage.center = CGPointMake(self.positiveImage.superview.center.x, yFinishLocation);
+    self.tokenImage.center = CGPointMake(self.tokenImage.superview.center.x, yFinishLocation);
     [UIView commitAnimations];
 }
 
 - (void)transitionDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context{
     NSLog(@"transition stoped in Positive");
     bool location = false;
+    self.collided = true;
     if(self.speed > 0){
         //If the token is moving from the top
         location = true;
     }
-    [MainViewController collide:self withLocation:location];
+    NSLog(@"%@", self.tokenImage.class);
+}
+
+-(void) bounce{
+    //Bounces straight back the same direction
+    NSLog(@"here");
+    [super bounce];
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:2];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(bounceFinished:finished:context:)];
+    [UIView setAnimationCurve: UIViewAnimationCurveLinear];
+    int yFinishLocation;
+    if(super.speed > 0){
+        yFinishLocation -= 30;
+    }else if(super.speed <= 0){
+        yFinishLocation += [[UIScreen mainScreen] bounds].size.height + 30;
+    }
+    self.tokenImage.center = CGPointMake(self.tokenImage.superview.center.x, yFinishLocation);
+    [UIView commitAnimations];
+}
+
+- (void)bounceFinished:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context{
+    NSLog(@"transition stoped in Positive");
+    self.needsToBeRemoved = true;
 }
 
 @end
